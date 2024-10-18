@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LinkButton from '../components/LinkButton.astro';
+import { getCollection } from 'astro:content';
+
+const links = await getCollection('links');
+const sortedLinks = links.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+---
+
+<Layout title="illescas.dev Links">
+  <main class="max-w-lg w-full p-8">
+    <div class="text-center mb-8">
+      <img
+        src="https://media-asgard.s3.eu-west-1.amazonaws.com/24/02/08/c30f6e41-29b9-43b5-8ea3-134f1a163f81_linkedin-photo-2504.linkedin-photo-2504"
+        alt="Oscar Illescas"
+        class="w-32 h-32 rounded-full mx-auto mb-4"
+      />
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Oscar Illescas</h1>
+      <p class="text-gray-600 dark:text-gray-400">Padre y Programador</p>
+    </div>
+    <div class="space-y-4">
+      {sortedLinks.map((link) => (
+        <LinkButton href={link.data.href} title={link.data.title} icon={link.data.icon} />
+      ))}
+    </div>
+  </main>
+</Layout>
